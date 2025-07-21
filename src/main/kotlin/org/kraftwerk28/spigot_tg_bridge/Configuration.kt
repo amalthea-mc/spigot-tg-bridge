@@ -11,13 +11,15 @@ class Configuration(plugin: Plugin) {
     val serverStartMessage: String?
     val serverStopMessage: String?
     val logJoinLeave: Boolean
+    val logLoginLogout: Boolean
     val joinString: String
+    val loginString: String
     val leaveString: String
     val logDeath: Boolean
     val logPlayerAsleep: Boolean
     val onlineString: String
     val nobodyOnlineString: String
-    val enableIgnAuth: Boolean
+//    val enableIgnAuth: Boolean
 
     // Telegram bot stuff
     val botToken: String
@@ -80,7 +82,7 @@ class Configuration(plugin: Plugin) {
             )!!
             // isEnabled = getBoolean("enable", true)
             allowedChats = getLongList("chats")
-            enableIgnAuth = getBoolean("enableIgnAuth", false)
+//            enableIgnAuth = getBoolean("enableIgnAuth", false)
 
             botToken = getString("botToken") ?: throw Exception(C.WARN.noToken)
             allowWebhook = getBoolean("useWebhook", false)
@@ -89,6 +91,7 @@ class Configuration(plugin: Plugin) {
             pollTimeout = getInt("pollTimeout", 30)
 
             logJoinLeave = getBoolean("logJoinLeave", false)
+            logLoginLogout = getBoolean("logLoginLogout", false)
             onlineString = getString("strings.online", "Online")!!
             nobodyOnlineString = getString(
                 "strings.nobodyOnline",
@@ -97,6 +100,10 @@ class Configuration(plugin: Plugin) {
             joinString = getString(
                 "strings.joined",
                 "<i>%username%</i> joined.",
+            )!!
+            loginString = getString(
+                "strings.loggedIn",
+                "<i>%username%</i> logged in.",
             )!!
             leaveString = getString("strings.left", "<i>%username%</i> left.")!!
             logDeath = getBoolean("logPlayerDeath", false)

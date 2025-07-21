@@ -5,7 +5,6 @@ object Constants {
     object WARN {
         const val noConfigWarning = "No config file found! Writing default config to config.yml."
         const val noToken = "Bot token must be defined."
-        const val noUsername = "Bot username must be defined."
     }
     object INFO {
         const val reloading = "Reloading..."
@@ -28,4 +27,6 @@ object Constants {
         const val onlineDesc = "Get players online"
         const val chatIDDesc = "Get current chat id"
     }
+
+    const val AUTH_ME_PLUGIN_NAME = "AuthMe"
 }

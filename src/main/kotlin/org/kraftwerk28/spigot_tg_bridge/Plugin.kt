@@ -1,14 +1,12 @@
 package org.kraftwerk28.spigot_tg_bridge
 
-import kotlinx.coroutines.delay
 import org.bukkit.event.HandlerList
-import java.lang.Exception
-import kotlin.system.measureTimeMillis
 import org.kraftwerk28.spigot_tg_bridge.Constants as C
 
 class Plugin : AsyncJavaPlugin() {
     private var tgBot: TgBot? = null
     private var eventHandler: EventHandler? = null
+    private var authMeEventHandler: AuthMeEventHandler? = null
     private var config: Configuration? = null
     var ignAuth: IgnAuth? = null
 
@@ -28,19 +26,25 @@ class Plugin : AsyncJavaPlugin() {
     private suspend fun initializeWithConfig(config: Configuration) {
         if (!config.isEnabled) return
 
-        if (config.enableIgnAuth) {
-            val dbFilePath = dataFolder.resolve("spigot-tg-bridge.sqlite")
-            ignAuth = IgnAuth(
-                fileName = dbFilePath.absolutePath,
-                plugin = this,
-            )
-        }
+//        if (config.enableIgnAuth) {
+//            val dbFilePath = dataFolder.resolve("spigot-tg-bridge.sqlite")
+//            ignAuth = IgnAuth(
+//                fileName = dbFilePath.absolutePath,
+//                plugin = this,
+//            )
+//        }
 
         tgBot?.run { stop() }
         tgBot = TgBot(this, config).also { bot ->
             bot.startPolling()
             eventHandler = EventHandler(this, config, bot).also {
                 server.pluginManager.registerEvents(it, this)
+            }
+            if (server.pluginManager.isPluginEnabled(C.AUTH_ME_PLUGIN_NAME) && config.logLoginLogout) {
+                logger.info("Found AuthMe plugin! Registering login/logout event handler...")
+                authMeEventHandler = AuthMeEventHandler(this, config, bot).also {
+                    server.pluginManager.registerEvents(it, this)
+                }
             }
         }
 

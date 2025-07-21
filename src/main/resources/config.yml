@@ -5,6 +5,7 @@ chats:
 serverStartMessage: "Server started."
 serverStopMessage: "Server stopped."
 logJoinLeave: true
+logLoginLogout: false
 logFromMCtoTG: true
 logFromTGtoMC: true
 logPlayerDeath: true
@@ -15,6 +16,7 @@ strings:
   online: "<b>Online</b>"
   nobodyOnline: "<b>Nobody online...</b>"
   joined: "<i>%username%</i> joined."
+  loggedIn: "<i>%username%</i> logged in."
   left: "<i>%username%</i> left."
 commands:
   time: "time"
